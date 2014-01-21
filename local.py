@@ -91,7 +91,6 @@ def cmd_clean():
     for path in paths:
         if os.path.exists(path):
             # shutil.rmtree won't work because .git dirs are readonly
-            print(['cmd', '/C', 'del', '/S', '/F', '/Q', path])
             check_call(['cmd', '/C', 'rmdir', '/S', '/Q', path])
         os.mkdir(path)
 
