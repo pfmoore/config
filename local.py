@@ -90,8 +90,10 @@ def cmd_clean():
     paths = ['Mercurial', 'Git', 'ConEmu', 'Vim', 'TCC']
     for path in paths:
         if os.path.exists(path):
-            # shutil.rmtree won't work because .git dirs are readonly
-            check_call(['cmd', '/C', 'rmdir', '/S', '/Q', path])
+            def make_rw_del(action, name, exc):
+                os.chmod(name, stat.S_IWRITE)
+                os.remove(name)
+            shutil.rmtree(path, onerror=make_rw_del)
         os.mkdir(path)
 
 if __name__ == '__main__':
