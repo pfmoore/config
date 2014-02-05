@@ -75,6 +75,7 @@ def cmd_remove():
 def cmd_deploy():
     copy('Mercurial', '$USERPROFILE', 'Mercurial.ini')
     copy('Git', '$USERPROFILE', '.gitconfig')
+    copy('Py', '$LOCALAPPDATA', 'py.ini')
     copy('TCC', ('$LOCALAPPDATA', 'JPSoft'))
     copy('Vim', ('$USERPROFILE', 'vimfiles'))
     check_call(['reg', 'import', 'ConEmu\\ConEmu.reg'])
@@ -82,12 +83,13 @@ def cmd_deploy():
 def cmd_import():
     copy('$USERPROFILE', 'Mercurial', 'Mercurial.ini')
     copy('$USERPROFILE', 'Git', '.gitconfig')
+    copy('$LOCALAPPDATA', 'Py', 'py.ini')
     copy(('$LOCALAPPDATA', 'JPSoft'), 'TCC')
     copy(('$USERPROFILE', 'vimfiles'), 'Vim')
     check_call(['reg', 'export', 'HKCU\\Software\\ConEmu\\.Vanilla', 'ConEmu\\ConEmu.reg', '/y'])
 
 def cmd_clean():
-    paths = ['Mercurial', 'Git', 'ConEmu', 'Vim', 'TCC']
+    paths = ['Mercurial', 'Git', 'ConEmu', 'Vim', 'TCC', 'Py']
     for path in paths:
         if os.path.exists(path):
             def make_rw_del(action, name, exc):
